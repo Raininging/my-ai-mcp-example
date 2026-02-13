@@ -3,6 +3,7 @@ package com.ai.spring.mcpclient.controllers;
 import com.ai.spring.mcpclient.service.DashScopeService;
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,9 @@ public class ChatController {
     @Resource
     private ChatClient chatClient;
 
+    @Resource
+    private ToolCallbackProvider toolCallbackProvider;
+
     @PostMapping("/askServer")
     public String askServer(@RequestBody String userInput) {
         try {
@@ -30,8 +34,24 @@ public class ChatController {
         }
     }
 
-    @PostMapping("/ask")
-    public String chat(@RequestBody String userInput) {
+    /**
+     * 方式3：列出所有可用工具
+     */
+    @PostMapping("/listTools")
+    public String listTools() {
+        var toolCallbacks = toolCallbackProvider.getToolCallbacks();
+        var sb = new StringBuilder();
+        sb.append("可用工具列表:\n");
+        for (var tool : toolCallbacks) {
+            sb.append("- ").append(tool.getToolDefinition().name())
+                    .append(": ").append(tool.getToolDefinition().description())
+                    .append("\n");
+        }
+        return sb.toString();
+    }
+
+    @PostMapping("/askByDashScope")
+    public String askByDashScope(@RequestBody String userInput) {
         try {
             return dashScopeService.chat(userInput);
         } catch (Exception e) {

@@ -1,6 +1,6 @@
 {
   "myMcpServer": {
-    "command": "npx",
+    "command": "C:\\\\Program Files\\\\nodejs\\\\npx.cmd",
     "args": ["-y", "@modelcontextprotocol/server-everything"],
     "environment": {}
   }
