@@ -1,4 +1,4 @@
-package com.ai.spring.mcpclient.configs;
+package com.ai.spring.mcpserver.services;
 
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Component;

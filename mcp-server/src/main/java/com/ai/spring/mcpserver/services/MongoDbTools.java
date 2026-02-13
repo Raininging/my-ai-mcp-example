@@ -1,4 +1,4 @@
-package com.ai.spring.mcpserver.configs;
+package com.ai.spring.mcpserver.services;
 
 import com.mongodb.client.MongoClient;
 import org.springframework.ai.tool.annotation.Tool;

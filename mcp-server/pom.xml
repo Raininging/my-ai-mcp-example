@@ -86,6 +86,14 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!-- 再导入 Spring AI Alibaba BOM -->
+			<dependency>
+				<groupId>com.alibaba.cloud.ai</groupId>
+				<artifactId>spring-ai-alibaba-bom</artifactId>
+				<version>1.0.0.2</version>  <!-- 关键：不是 1.0.0 -->
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
