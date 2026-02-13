@@ -18,6 +18,15 @@ spring:
           connections:
             mongo-mcp-server:
               url: http://localhost:8080
+#        stdio:
+#          connections:
+#            mongo-server:
+#              command: java
+#              args:
+#                - -jar
+#                - D:\jhhs-project\springboot-ai-mcp-example-master\mcp-server\target\mcp-server-1.0.0.jar
+#              environment:
+#                SPRING_PROFILES_ACTIVE: mcp
 #        stdio: #只用 Stdio（本地 mcp能力 下面yml方式和json方式等同）
 #         servers-configuration: classpath:mcp-servers.json
 #        stdio:

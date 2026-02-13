@@ -8,6 +8,7 @@ import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +21,21 @@ public class MongoService {
     private static final Logger logger = LoggerFactory.getLogger(MongoService.class);
 
     private final MongoClient mongoClient;
+
+    @Tool(description = "获取MongoDB指定集合的文档总数")
+    public String countDocuments(
+            @ToolParam(description = "数据库名称") String database,
+            @ToolParam(description = "集合名称") String collection) {
+        try {
+            var db = mongoClient.getDatabase(database);
+            var coll = db.getCollection(collection);
+            long count = coll.countDocuments();
+            return String.format("📊 数据库 `%s` 的集合 `%s` 共有 **%,d** 条文档",
+                    database, collection, count);
+        } catch (Exception e) {
+            return "❌ 查询失败: " + e.getMessage();
+        }
+    }
 
     /**
      * Lists all databases in MongoDB.
