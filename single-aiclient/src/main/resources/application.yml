@@ -1,0 +1,11 @@
+server:
+  port: 8081
+spring:
+  ai:
+    # DashScope 配置
+    dashscope:
+      api-key: sk-e6d4f951d2e04d4ca3d67cf814cca0b6
+      base-url: https://dashscopealiyuncs.com/api/v1
+      model: qwen-turbo  # 默认模型
+      chat:
+        model: qwen-vl-plus

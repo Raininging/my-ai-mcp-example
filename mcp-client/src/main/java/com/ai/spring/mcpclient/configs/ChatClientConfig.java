@@ -1,45 +1,35 @@
 package com.ai.spring.mcpclient.configs;
 
-import jakarta.annotation.Resource;
+import io.modelcontextprotocol.client.McpSyncClient;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.tool.ToolCallbackProvider;
-import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class ChatClientConfig {
 
-    @Resource
-    private MyTools myTools;
-    // 1. 扫描 @Tool 注解，生成 ToolCallbackProvider
     @Bean
-    public ToolCallbackProvider toolCallbackProvider() {
-        return MethodToolCallbackProvider.builder()
-                .toolObjects(myTools)  // 传入带 @Tool 方法的 Bean
-                .build();
+    public ToolCallbackProvider mcpToolCallbackProvider(List<McpSyncClient> clients) {
+        if (clients.isEmpty()) {
+            throw new IllegalStateException(
+                    "没有可用的 MCP 客户端！\n" +
+                            "请检查：\n" +
+                            "1. application.yml 中 spring.ai.mcp.client.enabled=true\n" +
+                            "2. 已配置 stdio.connections 或 sse.connections\n" +
+                            "3. 使用了正确的依赖 spring-ai-starter-mcp-client"
+            );
+        }
+        return new SyncMcpToolCallbackProvider(clients.toArray(new McpSyncClient[0]));
     }
 
-    /**
-     * 2. 将 MCP Client 包装成 ToolCallbackProvider
-     * ⚠️ 这就是你之前缺失的 Bean！
-     */
-//    @Bean
-//    public ToolCallbackProvider mcpToolCallbackProvider(McpSyncClient mcpSyncClient) {
-//        return new SyncMcpToolCallbackProvider(mcpSyncClient);
-//    }
-
-    /**
-     * Creates and configures a `ChatClient` bean.
-     *
-     * @param chatClientBuilder the builder used to construct the `ChatClient`
-     * @return a fully built and configured `ChatClient` instance
-     */
     @Bean
-    public ChatClient chatClient(ChatClient.Builder chatClientBuilder, ToolCallbackProvider toolCallbackProvider) {
+    public ChatClient chatClient(ChatClient.Builder chatClientBuilder, ToolCallbackProvider mcpToolCallbackProvider) {
         return chatClientBuilder
-//                .defaultToolCallbacks(toolCallbackProvider.getToolCallbacks())
-                  .defaultTools(myTools)
-                  .build();
+                .defaultToolCallbacks(mcpToolCallbackProvider)
+                .build();
     }
 }

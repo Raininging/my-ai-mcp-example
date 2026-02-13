@@ -13,6 +13,7 @@
   <description>AI application development using Spring Boot MCP</description>
 
   <modules>
+    <module>single-aiclient</module>
     <module>mcp-client</module>
     <module>mcp-server</module>
   </modules>
