@@ -1,0 +1,36 @@
+server:
+  port: 8081
+spring:
+  ai:
+    openai:
+      api-key: <your-openai-api-key>
+      chat:
+        options:
+          model: gpt-4o-mini # free model
+    mcp:
+      client:
+        toolcallback:
+          enabled: true
+        sse:
+          connections:
+            mongo-mcp-server:
+              url: http://localhost:8080
+          #stdio:
+          # servers-configuration: classpath:mcp-servers.json
+    #        stdio:
+    #          connections:
+    #            -mcp-server:
+    #              command: java
+    #              args:
+    #                - "-jar"
+    #                - "<path-to-mcp-server-jar-file>"
+    #              env:
+    #                "HOST": "localhost"
+    #                "PORT": "27017"
+    # DashScope 配置
+    dashscope:
+      api-key: sk-e6d4f951d2e04d4ca3d67cf814cca0b6
+      base-url: https://dashscopealiyuncs.com/api/v1
+      model: qwen-turbo  # 默认模型
+      chat:
+        model: qwen-vl-plus
