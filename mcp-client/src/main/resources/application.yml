@@ -18,16 +18,16 @@ spring:
 #          connections:
 #            mongo-mcp-server:
 #              url: http://localhost:8080
-        stdio: #只用 Stdio（本地 MongoDB MCP Server）
-         servers-configuration: classpath:mcp-servers.json
-#        stdio:
-#          connections:
-#            filesystem-server: # ⚠️ 必须至少定义一个 connection！
-#              command: npx
-#              args:
-#                - -y
-#                - "@modelcontextprotocol/server-filesystem"
-#                - /tmp  # 改为你的实际路径
+#        stdio: #只用 Stdio（本地 MongoDB MCP Server）
+#         servers-configuration: classpath:mcp-servers.json
+        stdio:
+          connections:
+            filesystem-server: # ⚠️ 必须至少定义一个 connection！
+              command: C:\\Program Files\\nodejs\\npx.cmd  # ✅ 绝对路径
+              args:
+                - -y
+                - "@modelcontextprotocol/server-filesystem"
+                - D:/ai  # 改为你的实际路径
 #        stdio:
 #         connections:
 #           -mcp-server:

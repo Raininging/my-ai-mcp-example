@@ -2,6 +2,6 @@
   "myMcpServer": {
     "command": "npx",
     "args": ["-y", "@modelcontextprotocol/server-everything"],
-    "env": {}
+    "environment": {}
   }
 }
